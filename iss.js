@@ -18,16 +18,9 @@
 fetchRequestAPIs = ['https://api.ipify.org?format=json']
 response = {}
  const fetchISS = async () => {
-  await Promise.all( fetchRequestAPIs.map(async (fetchRequest) =>{
-    
-      const {body} = await got.post(fetchRequest, {
-          json: {},
-          responseType: 'json'
-      });
-  })).catch(err => {
-      console.log(err);
-      
-  })  
+  await Promise.all(
+    const body = await got(url).json();
+  )
       response = body.data;
       console.log(body.data);
       //=> '{"hello":"world"}'
