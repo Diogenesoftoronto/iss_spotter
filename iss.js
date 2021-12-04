@@ -37,11 +37,11 @@ let response = {
         response.latitude = geo.latitude;
         response.longitude = geo.longitude;
         console.log(response)
-        // const iss = await got(`http://api.open-notify.org/iss-pass.json?lat=${response.latitude}&lon=${response.longitude}`).json();
-        // console.log(response)
-        // response.iss_pass = iss.body.response;
-        // done(null, response);
-        // console.log(response)
+        const iss = await got(`http://api.open-notify.org/iss-pass.json?lat=${response.latitude}&lon=${response.longitude}`).json();
+        console.log(response)
+        response.iss_pass = iss.body.response;
+        done(null, response);
+        console.log(response)
     }
     catch (error) {
         done(error, null);
