@@ -17,7 +17,7 @@
  */
 // DEPENDENCIES
 const got = require('got');
-
+const sensitive = require('/home/dio/lighthouse/w2/d4-api/iss_spotter/sensitive.js');
 myIp = 'https://api.ipify.org?format=json'
 let response = {
     IP: '',
@@ -28,16 +28,15 @@ let response = {
  const fetchISS = async (done) => {
     //  create promise alls using map to create an array of all the promise objects that have to be fulfilled at once.
     try {
-
         const body = await got(myIp).json();
         console.log(body.ip);
         response.IP = body.ip;
         console.log(response)
-        const geo = await got(`http://api.ipstack.com/${response.IP}?access_key=${process.env.IPSTACK_API_KEY}`).json();
+        const geo = await got(`https://api.freegeoip.app/json/?apikey=${sensitive.key}`).json();
         console.log(response)
-        // response.latitude = geo.latitude;
-        // response.longitude = geo.longitude;
-        // console.log(response)
+        response.latitude = geo.latitude;
+        response.longitude = geo.longitude;
+        console.log(response)
         // const iss = await got(`http://api.open-notify.org/iss-pass.json?lat=${response.latitude}&lon=${response.longitude}`).json();
         // console.log(response)
         // response.iss_pass = iss.body.response;
