@@ -15,14 +15,40 @@
  *   - An error, if any (nullable)
  *   - The IP address as a string (null if error). Example: "162.245.144.188"
  */
-fetchRequestAPIs = ['https://api.ipify.org?format=json']
-response = {}
- const fetchISS = async () => {
-  await Promise.all(
-    const body = await got(url).json();
-  )
-      response = body.data;
-      console.log(body.data);
-      //=> '{"hello":"world"}'
-};
-module.exports = {response};
+// DEPENDENCIES
+const got = require('got');
+
+myIp = 'https://api.ipify.org?format=json'
+let response = {
+    IP: '',
+    latitude: '',
+    longitude: '',
+    iss_pass: []
+}
+ const fetchISS = async (done) => {
+    //  create promise alls using map to create an array of all the promise objects that have to be fulfilled at once.
+    try {
+
+        const body = await got(myIp).json();
+        console.log(body.ip);
+        response.IP = body.ip;
+        console.log(response)
+        const geo = await got(`http://api.ipstack.com/${response.IP}?access_key=${process.env.IPSTACK_API_KEY}`).json();
+        console.log(response)
+        // response.latitude = geo.latitude;
+        // response.longitude = geo.longitude;
+        // console.log(response)
+        // const iss = await got(`http://api.open-notify.org/iss-pass.json?lat=${response.latitude}&lon=${response.longitude}`).json();
+        // console.log(response)
+        // response.iss_pass = iss.body.response;
+        // done(null, response);
+        // console.log(response)
+    }
+    catch (error) {
+        done(error, null);
+    }
+    console.log(response)
+}
+
+
+module.exports =  fetchISS ;
